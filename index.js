@@ -22,7 +22,7 @@ app.get('/users', async (req, res) => {
     }
   })
   
-  // Create a new user
+
   app.post('/users', async (req, res) => {
     try {
       const user = await db('users').insert({ name: req.body.name }).returning('*')
@@ -33,19 +33,6 @@ app.get('/users', async (req, res) => {
     }
   })
 
-
-  // Update an existing user
-app.put('/users/:id', async (req, res) => {
-  try {
-    const { id } = req.params
-    const { name } = req.body
-    const user = await db('users').where({ id }).update({ name }).returning('*')
-    res.json(user)
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Error updating user' })
-  }
-})
 
 // Delete an existing user
 app.delete('/users/:id', async (req, res) => {
@@ -58,9 +45,5 @@ app.delete('/users/:id', async (req, res) => {
     res.status(500).json({ message: 'Error deleting user' })
   }
 })
-
-
-
-
 
 app.listen(PORT, () => console.log(`Server up at PORT:${PORT}`))
